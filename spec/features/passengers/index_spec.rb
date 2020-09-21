@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Airline Show Page' do
+RSpec.describe 'Passenger Index Page' do
   before :each do
     @airline = Airline.create(name: "First Airline")
     @flight_1 = @airline.flights.create(number: 1234)
@@ -14,15 +14,15 @@ RSpec.describe 'Airline Show Page' do
     @passenger_6 = @flight_3.passengers.create(name: "Tim", age: 60)
     @passenger_7 = @flight_3.passengers.create(name: "Brian", age: 70)
     @passenger_8 = @flight_3.passengers.create(name: "Dani", age: 80)
-    @passenger_9 = @flight_2.passengers.create(name: "Saryn", age: 100)
-    @flights = Flight.all
-    visit airline_path(@airline)
+    @passengers = Passenger.all
+    visit passengers_path
   end
 
-  describe 'user story 2' do
-    it 'can see a unique list of passengers that have flights from that airline' do
-      @airline.passenger_list.each do |name|
-        expect(page).to have_content(name)
+  describe 'user story 4' do
+    it 'can list all passengers and next to each passenger is a count of the flights that passenger is on' do
+      @passengers.each do |passenger|
+        expect(page).to have_content(passenger.name)
+        expect(page).to have_content(passenger.flight_count)
       end 
     end
   end
