@@ -28,4 +28,21 @@ RSpec.describe 'Flight Index Page' do
       end
     end
   end
+
+  describe 'user story 3' do
+    it 'can see a link to remove passenger from flight next to each passengers name' do
+      within "#passenger-#{@passenger_1.id}" do
+        expect(page).to have_link("Remove Passenger From Flight")
+        expect(page).to have_content(@passenger_1.name)
+      end
+    end
+
+    it 'can click link, return to flights index page, and no longer see that passenger' do
+      within "#passenger-#{@passenger_1.id}" do
+        click_link "Remove Passenger From Flight"
+      end
+      expect(current_path).to eq(flights_path)
+      expect(page).to_not have_content(@passenger_1.name)
+    end
+  end
 end
